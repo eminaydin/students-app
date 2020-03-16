@@ -4,9 +4,11 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-// Routes
+// Middleware - Imports
+const logs = require("./middleware/logs");
+
+// Route - Imports
 const studentRoutes = require("./routes/students");
-const logs = require("./routes/logs");
 
 app.use(express.json());
 
