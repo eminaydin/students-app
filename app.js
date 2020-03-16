@@ -10,9 +10,17 @@ const logs = require("./middleware/logs");
 // Route - Imports
 const studentRoutes = require("./routes/students");
 
-app.use(express.json());
+/**
+ * Middleware
+ */
 
+// Parsing request.body
+app.use(express.json());
 app.use("/api", logs);
+
+/**
+ * Routes
+ */
 app.use("/api/students", studentRoutes);
 
 module.exports = app;
