@@ -16,9 +16,7 @@ router.get("/", (req, res) => {
 router.get("/:name", (req, res) => {
   fs.readFile(myPath, "utf-8", (err, data) => {
     if (err) console.log(err);
-
     data = JSON.parse(data);
-
     const student = data.find(
       ({ name }) => name.toLowerCase() === req.params.name.toLowerCase()
     );
@@ -32,35 +30,42 @@ router.get("/:name", (req, res) => {
 
 // - PUT (individual)
 router.put("/:name", (req, res) => {
-  fs.readFile(myPath, "utf-8", (err, data) => {
-    data = JSON.parse(data);
-    console.log(data);
-  });
-  // if (req.params.name && req.body) {
-  //   students = students.map(student => {
-  //     if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
-  //       Object.assign(student, req.body);
-  //     }
+  let students = fs.readFileSync(myPath, "utf-8");
+  students = JSON.parse(students);
+  if (req.params.name && req.body) {
+    students = students.map(student => {
+      if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
+        Object.assign(student, req.body);
+      }
 
-  //     return student;
-  //   });
-  // }
-  // res.send(students);
+      return student;
+    });
+  }
+  fs.writeFileSync(myPath, JSON.stringify(students));
+  res.send(students);
 });
-// - DELETE (individual)
+// // - DELETE (individual)
 router.delete("/:name", (req, res) => {
+  let students = fs.readFileSync(myPath, "utf-8");
+  students = JSON.parse(students);
+
   if (req.params.name) {
     students = students.filter(
       ({ name }) => name.toLowerCase() !== req.params.name.toLowerCase()
     );
+    fs.writeFileSync(myPath, JSON.stringify(students));
   }
 
   res.send(students);
 });
 // - POST (individual)
 router.post("/", (req, res) => {
-  if (req.body) {
-    students.push(req.body);
+  let students = fs.readFileSync(myPath, "utf-8");
+  students = JSON.parse(students);
+  students.push(req.body);
+
+  if (students) {
+    fs.writeFileSync(myPath, JSON.stringify(students));
     return res.send({
       status: "success",
       message: `student with name: ${req.body.name} added`
