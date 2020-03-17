@@ -1,9 +1,16 @@
-   students =  [
-        { 
-      name: "Rupert",
-      lastname: "Jalili",
-      age: 30,
-      class: "FBW101",
-      location: "BER"
-    }
-  ];
+[
+  {
+    "name": "Rupert",
+    "lastname": "Jalili",
+    "age": 30,
+    "class": "FBW101",
+    "location": "BER"
+  },
+  {
+    "name": "Julia",
+    "lastname": "Smith",
+    "age": 24,
+    "class": "FBW101",
+    "location": "BER"
+  }
+]
