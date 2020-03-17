@@ -1,45 +1,51 @@
 const express = require("express");
 const router = express.Router();
-
-let students = [
-  {
-    name: "Rupert",
-    lastname: "Jalili",
-    age: 30,
-    class: "FBW101",
-    location: "BER"
-  }
-];
+const fs = require("fs");
+const path = require("path");
+const myPath = path.join(__dirname, "../data/students.json");
 
 // - GET (all, individual)
+
 router.get("/", (req, res) => {
-  res.status(200).json(students);
+  fs.readFile(myPath, "utf-8", (err, data) => {
+    if (err) throw err;
+    res.status(200).json(JSON.parse(data));
+  });
 });
 
 router.get("/:name", (req, res) => {
-  const student = students.find(
-    ({ name }) => name.toLowerCase() === req.params.name.toLowerCase()
-  );
+  fs.readFile(myPath, "utf-8", (err, data) => {
+    if (err) console.log(err);
 
-  if (student) {
-    return res.status(200).json(student);
-  }
+    data = JSON.parse(data);
 
-  res.status(404).json({ error: "Student not found" });
+    const student = data.find(
+      ({ name }) => name.toLowerCase() === req.params.name.toLowerCase()
+    );
+
+    if (student) {
+      return res.status(200).json(student);
+    }
+    res.status(404).json({ error: "Student not found" });
+  });
 });
 
 // - PUT (individual)
 router.put("/:name", (req, res) => {
-  if (req.params.name && req.body) {
-    students = students.map((student) => {
-      if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
-        Object.assign(student, req.body);
-      }
+  fs.readFile(myPath, "utf-8", (err, data) => {
+    data = JSON.parse(data);
+    console.log(data);
+  });
+  // if (req.params.name && req.body) {
+  //   students = students.map(student => {
+  //     if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
+  //       Object.assign(student, req.body);
+  //     }
 
-      return student;
-    });
-  }
-  res.send(students);
+  //     return student;
+  //   });
+  // }
+  // res.send(students);
 });
 // - DELETE (individual)
 router.delete("/:name", (req, res) => {
