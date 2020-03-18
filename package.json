@@ -10,11 +10,15 @@
   "dependencies": {
     "debug": "~2.6.9",
     "express": "~4.16.1",
+<<<<<<< HEAD
     "jest": "^25.1.0",
+=======
+>>>>>>> master
     "superagent": "^5.2.2",
     "supertest": "^4.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "jest": "^25.1.0"
   }
 }
