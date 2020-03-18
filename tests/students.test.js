@@ -8,9 +8,8 @@ function isObject(item) {
 describe("Testing GET api/students/:name", () => {
   test("Content-Type -> JSON", async () => {
     const response = await request(app).get("/api/students/Rupert");
-    expect.objectContaining({
-      headers: expect.objectContaining({ "Content-Type": "application/json" })
-    });
+    let expectedCase = "application/json; charset=utf-8";
+    expect(response.headers["content-type"]).toBe(expectedCase);
   });
   test("It should respond with status code -> 200", async () => {
     const response = await request(app).get("/api/students/Rupert");
