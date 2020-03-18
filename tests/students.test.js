@@ -12,9 +12,8 @@ describe("Testing POST api/students", () => {
         class: "FBW101",
         location: "BER"
       });
-    expect.objectContaining({
-      headers: expect.objectContaining({ "Content-Type": "application/json" })
-    });
+    let expectedCase = "application/json; charset=utf-8";
+    expect(newStudent.headers["content-type"]).toBe(expectedCase);
     expect(newStudent.statusCode).toBe(200);
     const response = await request(app).get("/api/students/TestName");
     expect(response.body).toEqual(
