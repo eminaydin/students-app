@@ -17,9 +17,7 @@ router.get("/:name", (req, res) => {
   fs.readFile(studentsDataPath, "utf-8", (err, data) => {
     if (err) console.log(err);
     data = JSON.parse(data);
-    const student = data.find(
-      ({ name }) => name.toLowerCase() === req.params.name.toLowerCase()
-    );
+    const student = data.find(({ name }) => name.toLowerCase() === req.params.name.toLowerCase());
 
     if (student) {
       return res.status(200).json(student);
@@ -33,7 +31,7 @@ router.put("/:name", (req, res) => {
   let students = fs.readFileSync(studentsDataPath, "utf-8");
   students = JSON.parse(students);
   if (req.params.name && req.body) {
-    students = students.map((student) => {
+    students = students.map(student => {
       if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
         Object.assign(student, req.body);
       }
@@ -50,9 +48,7 @@ router.delete("/:name", (req, res) => {
   students = JSON.parse(students);
 
   if (req.params.name) {
-    students = students.filter(
-      ({ name }) => name.toLowerCase() !== req.params.name.toLowerCase()
-    );
+    students = students.filter(({ name }) => name.toLowerCase() !== req.params.name.toLowerCase());
     fs.writeFileSync(studentsDataPath, JSON.stringify(students));
   }
 
@@ -62,8 +58,9 @@ router.delete("/:name", (req, res) => {
 router.post("/", (req, res) => {
   let students = fs.readFileSync(studentsDataPath, "utf-8");
   students = JSON.parse(students);
-  students.push(req.body);
-
+  if (!students.findIndex(obj => obj === req.body) === 0) {
+    students.push(req.body);
+  }
   if (students) {
     fs.writeFileSync(studentsDataPath, JSON.stringify(students));
     return res.send({
