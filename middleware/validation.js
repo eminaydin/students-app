@@ -25,7 +25,7 @@ const validation = (req, res, next) => {
   if (!value.error) {
     next();
   } else {
-    res.send(value.error.message);
+    res.status(400).send(value.error.message);
   }
 };
 
