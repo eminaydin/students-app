@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const studentsDataPath = path.join(__dirname, "../data/students.json");
-const validation = require("../validation/validation");
+const validation = require("../middleware/validation");
 
 // - GET (all, individual)
 
