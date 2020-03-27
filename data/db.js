@@ -26,18 +26,6 @@ db.defaults({
   students: [...exampleStudents]
 }).write();
 
-console.log(
-  db
-    .get("students")
-    .push({
-      name: "Ruperzilla",
-      lastname: "Zillage",
-      age: 500,
-      class: "GS1905",
-      location: "Galatasaray"
-    })
-    .write()
-);
 module.exports = {
   // TODO: get all students
 
@@ -57,14 +45,7 @@ module.exports = {
   // TODO: update by name
 
   updateStudentByName: name => {
-    db.get("students")
-      .find({ name: name })
-      .assign({ name: "Ruperzolla", lastname: "Radiator", age: 500 })
-      .write();
-  },
-  // TODO: delete by name
-
-  deleteStudentByName: name => {
+    db.get("students");
     db.get("students")
       .remove({ name: name })
       .write();
