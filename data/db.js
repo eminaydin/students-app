@@ -46,14 +46,27 @@ module.exports = {
 
   // TODO: update by name
 
-  updateStudentByName: name => {
+  updateStudentByName: (name, changesObj) => {
+    let updatedStudent = db
+      .get("students")
+      .find({ name: name })
+      .assign(changesObj)
+      .write();
+    return updatedStudent;
+  },
+
+  // TODO: remove by name
+
+  removeStudentByName: name => {
     let removedStudent = db
       .get("students")
       .remove({ name: name })
       .write();
     return removedStudent;
   },
+
   // TODO: add new student
+
   addStudent: studentObject => {
     let addedStudent = db
       .get("students")
