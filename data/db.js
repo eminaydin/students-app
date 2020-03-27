@@ -41,7 +41,6 @@ module.exports = {
       .get("students")
       .find({ name: name })
       .value();
-    console.log(foundStudent);
     return foundStudent;
   },
 
