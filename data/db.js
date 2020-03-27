@@ -37,23 +37,29 @@ module.exports = {
   // TODO: get by name
 
   getStudentByName: name => {
-    db.get("students")
+    let foundStudent = db
+      .get("students")
       .find({ name: name })
       .value();
+    console.log(foundStudent);
+    return foundStudent;
   },
 
   // TODO: update by name
 
   updateStudentByName: name => {
-    db.get("students");
-    db.get("students")
+    let removedStudent = db
+      .get("students")
       .remove({ name: name })
       .write();
+    return removedStudent;
   },
   // TODO: add new student
   addStudent: studentObject => {
-    db.get("students")
+    let addedStudent = db
+      .get("students")
       .push(studentObject)
       .write();
+    return addedStudent;
   }
 };
