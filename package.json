@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "lowdb": "^1.0.0",
