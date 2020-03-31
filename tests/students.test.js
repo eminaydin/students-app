@@ -5,6 +5,23 @@ function isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
 }
 
+afterEach(() => {
+  const fs = require("fs");
+  const path = require("path");
+  const studentsDataPath = path.join(__dirname, "../data/students.json");
+
+  const defaultContent = [
+    {
+      name: "Rupert",
+      lastname: "Jalili",
+      age: 30,
+      class: "FBW101",
+      location: "BER"
+    }
+  ];
+  fs.writeFileSync(studentsDataPath, JSON.stringify(defaultContent));
+});
+
 describe("Testing GET api/students", () => {
   test("Content-Type -> JSON", async () => {
     const response = await request(app).get("/api/students");
@@ -24,6 +41,28 @@ describe("Testing GET api/students", () => {
   });
 });
 
+describe("Testing DELETE request on api/students", () => {
+  test("Post new Student, DELETE new student", async () => {
+    const newStudent = await request(app)
+      .post("/api/students")
+      .send({
+        name: "TestName",
+        lastname: "TestLastName",
+        age: 22,
+        class: "FBW101",
+        location: "BER"
+      });
+    const removedStudent = await request(app).delete(
+      `/api/students/${newStudent.body.name}`
+    );
+    expect(removedStudent.statusCode).toBe(200);
+  });
+  test("GET updated students aray", async () => {
+    const response = await request(app).get(`/api/students`);
+    expect(response.body.length).toBe(1);
+  });
+});
+
 describe("Testing POST api/students", () => {
   test("Content-Type -> JSON", async () => {
     const newStudent = await request(app)
@@ -35,6 +74,7 @@ describe("Testing POST api/students", () => {
         class: "FBW101",
         location: "BER"
       });
+
     let expectedCase = "application/json; charset=utf-8";
     expect(newStudent.headers["content-type"]).toBe(expectedCase);
     expect(newStudent.statusCode).toBe(200);
