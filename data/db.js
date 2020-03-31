@@ -1,26 +1,77 @@
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 
-const adapter = new FileSync("data/db.json");
+const adapter = new FileSync("./data/db.json");
 const db = low(adapter);
 
-const exampleStudent = {
-  name: "Rupert",
-  lastname: "Jalili",
-  age: 30,
-  class: "FBW101",
-  location: "BER"
-};
+const exampleStudents = [
+  {
+    name: "Rupert",
+    lastname: "Jalili",
+    age: 30,
+    class: "FBW101",
+    location: "BER"
+  },
+  {
+    name: "Rupertilla",
+    lastname: "Jalili",
+    age: 28,
+    class: "FBW101",
+    location: "BER"
+  }
+];
 
 // default setup
 db.defaults({
-  students: [exampleStudent]
+  students: [...exampleStudents]
 }).write();
 
 module.exports = {
   // TODO: get all students
+
+  getStudents: () => {
+    let students = db.get("students").value();
+    return students;
+  },
+
   // TODO: get by name
+
+  getStudentByName: name => {
+    let foundStudent = db
+      .get("students")
+      .find({ name: name })
+      .value();
+    return foundStudent;
+  },
+
   // TODO: update by name
-  // TODO: delete by name
+
+  updateStudentByName: (name, changesObj) => {
+    let updatedStudent = db
+      .get("students")
+      .find({ name: name })
+      .assign(changesObj)
+      .write();
+    return updatedStudent;
+  },
+
+  // TODO: remove by name
+
+  removeStudentByName: name => {
+    let removedStudent = db
+      .get("students")
+      .remove({ name: name })
+      .write();
+    return removedStudent;
+  },
+
   // TODO: add new student
+
+  addStudent: studentObject => {
+    let addedStudent = db
+      .get("students")
+      .push(studentObject)
+      .write();
+    return addedStudent;
+  }
 };
