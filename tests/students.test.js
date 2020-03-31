@@ -5,6 +5,23 @@ function isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
 }
 
+afterEach(() => {
+  const fs = require("fs");
+  const path = require("path");
+  const studentsDataPath = path.join(__dirname, "../data/students.json");
+
+  const defaultContent = [
+    {
+      name: "Rupert",
+      lastname: "Jalili",
+      age: 30,
+      class: "FBW101",
+      location: "BER"
+    }
+  ];
+  fs.writeFileSync(studentsDataPath, JSON.stringify(defaultContent));
+});
+
 describe("Testing GET api/students", () => {
   test("Content-Type -> JSON", async () => {
     const response = await request(app).get("/api/students");
