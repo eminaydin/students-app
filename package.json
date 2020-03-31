@@ -5,7 +5,13 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "jest"
+    "test": "jest",
+    "test:dev": "jest --watchAll"
+  },
+  "jest": {
+    "watchPathIgnorePatterns": [
+      "<rootDir>/data/\\w+.json"
+    ]
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
