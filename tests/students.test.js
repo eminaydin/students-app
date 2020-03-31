@@ -46,6 +46,34 @@ describe("Testing DELETE request on api/students", () => {
   });
 });
 
+describe("Testing POST api/students", () => {
+  test("Content-Type -> JSON", async () => {
+    const newStudent = await request(app)
+      .post("/api/students")
+      .send({
+        name: "TestName",
+        lastname: "TestLastName",
+        age: 22,
+        class: "FBW101",
+        location: "BER"
+      });
+
+    let expectedCase = "application/json; charset=utf-8";
+    expect(newStudent.headers["content-type"]).toBe(expectedCase);
+    expect(newStudent.statusCode).toBe(200);
+    const response = await request(app).get("/api/students/TestName");
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        name: "TestName",
+        lastname: "TestLastName",
+        age: 22,
+        class: "FBW101",
+        location: "BER"
+      })
+    );
+  });
+});
+
 describe("Testing GET api/students/:name", () => {
   test("Content-Type -> JSON", async () => {
     const response = await request(app).get("/api/students/Rupert");
