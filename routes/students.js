@@ -63,6 +63,7 @@ router.delete("/:name", (req, res) => {
 router.post("/", validation, (req, res) => {
   let students = fs.readFileSync(studentsDataPath, "utf-8");
   students = JSON.parse(students);
+  students.push(req.body);
 
   if (students) {
     fs.writeFileSync(studentsDataPath, JSON.stringify(students));
