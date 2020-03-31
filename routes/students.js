@@ -34,7 +34,7 @@ router.put("/:name", validation, (req, res) => {
   let students = fs.readFileSync(studentsDataPath, "utf-8");
   students = JSON.parse(students);
   if (req.params.name && req.body) {
-    students = students.map(student => {
+    students = students.map((student) => {
       if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
         Object.assign(student, req.body);
       }
