@@ -8,11 +8,11 @@ const validation = require("../middleware/validation");
 
 const getAllStudents = (req,res) => {
     fs.readFile(studentsDataPath, "utf-8", (err,data) => {
-        console.log(req);
+        if (err) throw err;
+        res.status(200).json(JSON.parse(data));
     })
-}
+};
 
-console.log(getAllStudents());
 
 module.exports = {
     getAllStudents
