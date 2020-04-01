@@ -1,9 +1,9 @@
-const low = require("lowdb");
 const path = require("path");
 const dataPath = path.join(__dirname, "../data/db.json");
-
+const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync(dataPath);
+console.log(adapter);
 const db = low(adapter);
 const exampleStudents = [
   {
@@ -14,9 +14,11 @@ const exampleStudents = [
     location: "BER"
   }
 ];
+
+console.log(exampleStudents);
 // default setup
 db.defaults({
-  students: [...exampleStudents]
+  students: []
 }).write();
 
 module.exports = {
@@ -70,8 +72,8 @@ module.exports = {
       .push(req.body)
       .write();
     if (addedStudent) {
-      res.send(req.body);
+      return res.status(200).json(addedStudent);
     }
-    res.send("Not a valid student");
+    res.status(404).json({ error: "Invalid Student" });
   }
 };
