@@ -5,10 +5,18 @@ console.log(studentsPath);
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync(studentsPath);
 const db = low(adapter);
-
+const exampleStudents = [
+  {
+    name: "Rupert",
+    lastname: "Jalili",
+    age: 30,
+    class: "FBW101",
+    location: "BER"
+  }
+];
 // default setup
 db.defaults({
-  students: [studentsPath]
+  students: [...exampleStudents]
 }).write();
 
 module.exports = {
