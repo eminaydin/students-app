@@ -104,4 +104,3 @@ describe("Testing GET api/students/:name", () => {
     expect(isObject(response.body)).toBe(true);
   });
 });
-
