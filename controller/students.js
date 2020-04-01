@@ -3,7 +3,6 @@ const dataPath = path.join(__dirname, "../data/db.json");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync(dataPath);
-console.log(adapter);
 const db = low(adapter);
 const exampleStudents = [
   {
@@ -15,17 +14,17 @@ const exampleStudents = [
   }
 ];
 
-// default setup
 db.defaults({
   students: [...exampleStudents]
 }).write();
 
 module.exports = {
+  db,
+
   // TODO: get all students
 
   getStudents: (req, res) => {
     let students = db.get("students").value();
-    console.log(students);
     res.status(200).json(students);
   },
 

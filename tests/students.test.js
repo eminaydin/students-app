@@ -1,15 +1,12 @@
 const request = require("supertest");
 const app = require("../app");
+const { db } = require("../controller/students");
 
 function isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
 }
 
 afterEach(() => {
-  const fs = require("fs");
-  const path = require("path");
-  const dataPath = path.join(__dirname, "../data/db.json");
-
   const defaultContent = [
     {
       name: "Rupert",
@@ -19,7 +16,8 @@ afterEach(() => {
       location: "BER"
     }
   ];
-  fs.writeFileSync(dataPath, JSON.stringify(defaultContent));
+
+  db.set("students", defaultContent).write();
 });
 
 describe("Testing GET api/students", () => {
@@ -37,6 +35,7 @@ describe("Testing GET api/students", () => {
 
   test("Content is an array", async () => {
     const response = await request(app).get("/api/students");
+    console.log(response.body);
     expect(Array.isArray(response.body)).toBe(true);
   });
 });
@@ -56,8 +55,9 @@ describe("Testing DELETE request on api/students", () => {
     expect(removedStudent.statusCode).toBe(200);
   });
   test("GET updated students aray", async () => {
-    const response = await request(app).get(`/api/students`);
-    expect(response.body.length).toBe(1);
+    const response = await request(app).get(`/api/students/TestName`);
+    console.log(typeof response.body);
+    expect(response.body).toEqual({ error: "Student Not Found" });
   });
 });
 
@@ -77,6 +77,7 @@ describe("Testing POST api/students", () => {
     expect(newStudent.headers["content-type"]).toBe(expectedCase);
     expect(newStudent.statusCode).toBe(200);
     const response = await request(app).get("/api/students/TestName");
+    console.log(response.body);
     expect(response.body).toEqual(
       expect.objectContaining({
         name: "TestName",
@@ -92,11 +93,13 @@ describe("Testing POST api/students", () => {
 describe("Testing GET api/students/:name", () => {
   test("Content-Type -> JSON", async () => {
     const response = await request(app).get("/api/students/Rupert");
+    console.log(response.body);
     let expectedCase = "application/json; charset=utf-8";
     expect(response.headers["content-type"]).toBe(expectedCase);
   });
   test("It should respond with status code -> 200", async () => {
     const response = await request(app).get("/api/students/Rupert");
+    console.log(response.body);
     expect(response.statusCode).toBe(200);
   });
   test("Content is an Object", async () => {

@@ -6,13 +6,6 @@
       "age": 30,
       "class": "FBW101",
       "location": "BER"
-    },
-    {
-      "name": "Rupert2",
-      "lastname": "Doe",
-      "age": 25,
-      "class": "BER21",
-      "location": "BER"
     }
   ]
 }
