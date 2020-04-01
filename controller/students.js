@@ -15,7 +15,6 @@ const exampleStudents = [
   }
 ];
 
-console.log(exampleStudents);
 // default setup
 db.defaults({
   students: [...exampleStudents]
@@ -67,8 +66,6 @@ module.exports = {
   // TODO: add new student
 
   addStudent: (req, res) => {
-    console.log(req.body);
-
     let addedStudent = db
       .get("students")
       .push(req.body)
