@@ -1,9 +1,9 @@
 const low = require("lowdb");
 const path = require("path");
-const studentsPath = path.join(__dirname, "../data/students.json");
-console.log(studentsPath);
+const dataPath = path.join(__dirname, "../data/db.json");
+
 const FileSync = require("lowdb/adapters/FileSync");
-const adapter = new FileSync(studentsPath);
+const adapter = new FileSync(dataPath);
 const db = low(adapter);
 const exampleStudents = [
   {
