@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const studentsDataPath = path.join(__dirname, "../data/students.json");
 
-
 // - GET (all, individual)
 const getAllStudents = (req,res) => {
     fs.readFile(studentsDataPath, "utf-8", (err,data) => {
@@ -11,8 +10,7 @@ const getAllStudents = (req,res) => {
     })
 };
 
-
-const getStudent = (req,req) => {
+const getStudent = (req,res) => {
     fs.readFile(studentsDataPath, "utf-8", (err, data) => {
       if (err) console.log(err);
       data = JSON.parse(data);
@@ -36,7 +34,6 @@ const putStudent =  (req, res) => {
         if (student.name.toLowerCase() === req.params.name.toLowerCase()) {
           Object.assign(student, req.body);
         }
-  
         return student;
       });
     }
@@ -57,7 +54,6 @@ const putStudent =  (req, res) => {
       );
       fs.writeFileSync(studentsDataPath, JSON.stringify(students));
     }
-  
     res.send(students);
   };
 
@@ -74,10 +70,8 @@ const postStudent =  (req, res) => {
         message: `student with name: ${req.body.name} added`
       });
     }
-  
     res.send("NO!");
   };
-
 
 module.exports = {
     getAllStudents,

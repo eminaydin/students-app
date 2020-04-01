@@ -3,6 +3,7 @@ const router = express.Router();
 const validation = require("../middleware/validation");
 const controller = require("../controller/students");
 
+
 // - GET (all, individual)
 
 router.get("/", controller.getAllStudents);
