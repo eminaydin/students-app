@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const { db } = require("../controller/students");
+const { db } = require("../data/db");
 
 function isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
@@ -48,7 +48,9 @@ describe("Testing DELETE request on api/students", () => {
       class: "FBW101",
       location: "BER",
     });
-    const removedStudent = await request(app).delete(`/api/students/${newStudent.body.name}`);
+    const removedStudent = await request(app).delete(
+      `/api/students/${newStudent.body.name}`
+    );
     expect(removedStudent.statusCode).toBe(200);
   });
   test("GET updated students aray", async () => {
