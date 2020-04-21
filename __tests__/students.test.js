@@ -1,25 +1,16 @@
 const request = require("supertest");
 const app = require("../app");
+const { db } = require("../data/db");
+const { students: studentsDefaultsTemplate } = require("../data/defaults");
 
 function isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
 }
 
 afterEach(() => {
-  const fs = require("fs");
-  const path = require("path");
-  const studentsDataPath = path.join(__dirname, "../data/students.json");
+  const studentsDefaults = [...studentsDefaultsTemplate];
 
-  const defaultContent = [
-    {
-      name: "Rupert",
-      lastname: "Jalili",
-      age: 30,
-      class: "FBW101",
-      location: "BER"
-    }
-  ];
-  fs.writeFileSync(studentsDataPath, JSON.stringify(defaultContent));
+  db.set("students", studentsDefaults).write();
 });
 
 describe("Testing GET api/students", () => {
@@ -43,37 +34,33 @@ describe("Testing GET api/students", () => {
 
 describe("Testing DELETE request on api/students", () => {
   test("Post new Student, DELETE new student", async () => {
-    const newStudent = await request(app)
-      .post("/api/students")
-      .send({
-        name: "TestName",
-        lastname: "TestLastName",
-        age: 22,
-        class: "FBW101",
-        location: "BER"
-      });
+    const newStudent = await request(app).post("/api/students").send({
+      name: "TestName",
+      lastname: "TestLastName",
+      age: 22,
+      class: "FBW101",
+      location: "BER",
+    });
     const removedStudent = await request(app).delete(
       `/api/students/${newStudent.body.name}`
     );
     expect(removedStudent.statusCode).toBe(200);
   });
   test("GET updated students aray", async () => {
-    const response = await request(app).get(`/api/students`);
-    expect(response.body.length).toBe(1);
+    const response = await request(app).get(`/api/students/TestName`);
+    expect(response.body).toEqual({ error: "Student Not Found" });
   });
 });
 
 describe("Testing POST api/students", () => {
   test("Content-Type -> JSON", async () => {
-    const newStudent = await request(app)
-      .post("/api/students")
-      .send({
-        name: "TestName",
-        lastname: "TestLastName",
-        age: 22,
-        class: "FBW101",
-        location: "BER"
-      });
+    const newStudent = await request(app).post("/api/students").send({
+      name: "TestName",
+      lastname: "TestLastName",
+      age: 22,
+      class: "FBW101",
+      location: "BER",
+    });
 
     let expectedCase = "application/json; charset=utf-8";
     expect(newStudent.headers["content-type"]).toBe(expectedCase);
@@ -85,7 +72,7 @@ describe("Testing POST api/students", () => {
         lastname: "TestLastName",
         age: 22,
         class: "FBW101",
-        location: "BER"
+        location: "BER",
       })
     );
   });
