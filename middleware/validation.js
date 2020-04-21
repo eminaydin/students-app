@@ -17,6 +17,7 @@ const validation = (req, res, next) => {
   if (!value.error) {
     next();
   } else {
+    throw new Error(value.error);
   }
 };
 
