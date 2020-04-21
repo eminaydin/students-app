@@ -1,23 +1,16 @@
 const request = require("supertest");
 const app = require("../app");
 const { db } = require("../data/db");
+const { students: studentsDefaultsTemplate } = require("../data/defaults");
 
 function isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
 }
 
 afterEach(() => {
-  const defaultContent = [
-    {
-      name: "Rupert",
-      lastname: "Jalili",
-      age: 30,
-      class: "FBW101",
-      location: "BER",
-    },
-  ];
+  const studentsDefaults = [...studentsDefaultsTemplate];
 
-  db.set("students", defaultContent).write();
+  db.set("students", studentsDefaults).write();
 });
 
 describe("Testing GET api/students", () => {
