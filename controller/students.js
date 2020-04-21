@@ -1,22 +1,6 @@
 let { db } = require("../data/db");
 
-const exampleStudents = [
-  {
-    name: "Rupert",
-    lastname: "Jalili",
-    age: 30,
-    class: "FBW101",
-    location: "BER",
-  },
-];
-
-db.defaults({
-  students: [...exampleStudents],
-}).write();
-
 module.exports = {
-  db,
-
   // TODO: get all students
 
   getStudents: (req, res) => {
@@ -27,7 +11,10 @@ module.exports = {
   // TODO: get by name
 
   getStudentByName: (req, res) => {
-    let foundStudent = db.get("students").find({ name: req.params.name }).value();
+    let foundStudent = db
+      .get("students")
+      .find({ name: req.params.name })
+      .value();
     if (foundStudent) {
       return res.status(200).json(foundStudent);
     }
@@ -48,7 +35,10 @@ module.exports = {
   // TODO: remove by name
 
   removeStudentByName: (req, res) => {
-    let removedStudent = db.get("students").remove({ name: req.params.name }).write();
+    let removedStudent = db
+      .get("students")
+      .remove({ name: req.params.name })
+      .write();
     res.send(removedStudent);
   },
 

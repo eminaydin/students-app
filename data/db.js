@@ -5,6 +5,11 @@ const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync(dataPath);
 const db = low(adapter);
 
+// Defaults
+const defaults = require("./defaults");
+
+db.defaults(defaults).write();
+
 module.exports = {
   db,
 };
