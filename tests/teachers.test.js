@@ -12,12 +12,12 @@ afterEach(() => {
 
   const defaultContent = [
     {
-      "name": "Oliver",
-      "lastname": "Weber",
-      "age": 30,
-      "class": "FBW101",
-      "location": "BER",
-      "profession": "Full-stack"
+      name: "Oliver",
+      lastname: "Weber",
+      age: 30,
+      class: "FBW101",
+      location: "BER",
+      profession: "Full-stack"
     }
   ]
   
@@ -52,7 +52,9 @@ describe("Testing DELETE request on api/teachers", () => {
         lastname: "TestLastName",
         age: 22,
         class: "FBW101",
-        location: "BER"
+        location: "BER",
+        profession: "Full-stack"
+
       });
     const removedTeacher = await request(app).delete(
       `/api/teachers/${newTeacher.body.name}`
@@ -74,7 +76,7 @@ describe("Testing POST api/teachers", () => {
         lastname: "TestLastName",
         age: 22,
         class: "FBW101",
-        location: "BER",
+        location: "HH",
         profession: "Full-stack"
       });
 
