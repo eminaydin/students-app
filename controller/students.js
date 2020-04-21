@@ -29,6 +29,7 @@ module.exports = {
       .find({ name: req.params.name })
       .assign(req.body)
       .write();
+
     res.send(updatedStudent);
   },
 
@@ -39,6 +40,7 @@ module.exports = {
       .get("students")
       .remove({ name: req.params.name })
       .write();
+
     res.send(removedStudent);
   },
 
@@ -49,6 +51,6 @@ module.exports = {
     if (addedStudent) {
       return res.status(200).json(addedStudent);
     }
-    res.status(404).json({ error: "Invalid Student" });
+    res.status(500).json({ error: "Invalid Student" });
   },
 };
