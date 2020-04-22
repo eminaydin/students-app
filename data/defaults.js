@@ -8,4 +8,13 @@ module.exports = {
       location: "BER",
     },
   ],
+  teachers: [
+    {
+      name: "Oliver",
+      lastname: "Weber",
+      age: 30,
+      class: "FBW21",
+      location: "BER",
+    }
+  ]
 };

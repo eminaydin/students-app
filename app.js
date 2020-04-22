@@ -6,6 +6,7 @@ const logs = require("./middleware/logs");
 
 // Route - Imports
 const studentRoutes = require("./routes/students");
+const teacherRoutes = require("./routes/teachers");
 
 /**
  * Middleware
@@ -19,5 +20,6 @@ app.use("/api", logs);
  * Routes
  */
 app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
 
 module.exports = app;
