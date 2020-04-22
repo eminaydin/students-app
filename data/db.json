@@ -1,18 +1,9 @@
-{
-  "students": [
-    {
-      "name": "Rupert",
-      "lastname": "Jalili",
-      "age": 30,
-      "class": "FBW101",
-      "location": "BER"
-    },
-    {
-      "name": "Ruperzilla",
-      "lastname": "Zillage",
-      "age": 500,
-      "class": "GS1905",
-      "location": "Galatasaray"
-    }
-  ]
-}
+[
+  {
+    "name": "Oliver",
+    "lastname": "Weber",
+    "age": 30,
+    "class": "FBW101",
+    "location": "BER"
+  }
+]

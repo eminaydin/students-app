@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const teachersDataPath = path.join(__dirname, "../data/teachers.json");
+const teachersDataPath = path.join(__dirname, "../data/db.json");
 
 // - GET (all, individual)
 const getAllTeachers = (req,res) => {

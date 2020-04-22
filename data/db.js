@@ -20,18 +20,39 @@ const exampleStudents = [
     location: "BER"
   }
 ];
+const exampleTeachers = [
+  {
+    name: "Oliver",
+    lastname: "Weber",
+    age: 30,
+    classes: "FBW101",
+    location: "BER",
+  },
+  {
+    name: "Joe",
+    lastname: "Doe",
+    age: 39,
+    classes: "FBW141",
+    location: "HH",
+  }
+];
 
 // default setup
 db.defaults({
-  students: [...exampleStudents]
+  students: [...exampleStudents],
+  teachers: [...exampleTeachers]
 }).write();
 
 module.exports = {
-  // TODO: get all students
+  // TODO: get all 
 
   getStudents: () => {
     let students = db.get("students").value();
     return students;
+  },
+  getTeachers: () => {
+    let teachers = db.get("teachers").value();
+    return teachers;
   },
 
   // TODO: get by name
@@ -43,7 +64,13 @@ module.exports = {
       .value();
     return foundStudent;
   },
-
+  getTeacherByName: name => {
+    let foundTeachers = db
+      .get("teachers")
+      .find({ name: name })
+      .value();
+    return foundTeachers;
+  },
   // TODO: update by name
 
   updateStudentByName: (name, changesObj) => {
@@ -53,6 +80,14 @@ module.exports = {
       .assign(changesObj)
       .write();
     return updatedStudent;
+  },
+  updateTeacherByName: (name, changesObj) => {
+    let updatedTeacher = db
+      .get("teachers")
+      .find({ name: name })
+      .assign(changesObj)
+      .write();
+    return updatedTeacher;    
   },
 
   // TODO: remove by name
@@ -64,8 +99,15 @@ module.exports = {
       .write();
     return removedStudent;
   },
+  removeTeacherByName: name => {
+    let removedTeacher = db
+      .get("teachers")
+      .remove({ name: name })
+      .write();
+    return removedTeacher;
+  },
 
-  // TODO: add new student
+  // TODO: add new 
 
   addStudent: studentObject => {
     let addedStudent = db
@@ -73,5 +115,12 @@ module.exports = {
       .push(studentObject)
       .write();
     return addedStudent;
+  },
+  addTeacher: teacherObject => {
+    let addedTeachers = db
+      .get("teachers")
+      .push(teacherObject)
+      .write();
+    return addedTeachers;
   }
 };

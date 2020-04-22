@@ -8,7 +8,7 @@ function isObject(item) {
 afterEach(() => {
   const fs = require("fs");
   const path = require("path");
-  const teachersDataPath = path.join(__dirname, "../data/teachers.json");
+  const teachersDataPath = path.join(__dirname, "../data/db.json");
 
   const defaultContent = [
     {
@@ -17,7 +17,6 @@ afterEach(() => {
       age: 30,
       class: "FBW101",
       location: "BER",
-      profession: "Full-stack"
     }
   ]
   
@@ -53,7 +52,6 @@ describe("Testing DELETE request on api/teachers", () => {
         age: 22,
         class: "FBW101",
         location: "BER",
-        profession: "Full-stack"
 
       });
     const removedTeacher = await request(app).delete(
@@ -76,8 +74,7 @@ describe("Testing POST api/teachers", () => {
         lastname: "TestLastName",
         age: 22,
         class: "FBW101",
-        location: "HH",
-        profession: "Full-stack"
+        location: "BER",
       });
 
     let expectedCase = "application/json; charset=utf-8";
@@ -91,7 +88,6 @@ describe("Testing POST api/teachers", () => {
         age: 22,
         class: "FBW101",
         location: "BER",
-        profession: "Full-stack"
       })
     );
   });

@@ -7,7 +7,7 @@ const controller = require("../controller/teachers.js");
 // - GET (all, individual)
 
 router.get("/", controller.getAllTeachers);
-router.get("/:name", controller.getAllTeachers);
+router.get("/:name", controller.getTeacher);
 
 // - PUT (individual)
 router.put("/:name", validation, controller.putTeacher);
